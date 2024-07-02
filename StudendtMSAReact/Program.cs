@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using StudendtMSAReact.Context;// reffering to context file
+
+
 var builder = WebApplication.CreateBuilder(args);
+//Connecting t database
+var connectionString = builder.Configuration.GetConnectionString("MyConnectionString");
+builder.Services.AddDbContext<StudnetDBContext>(options =>
+      options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
 
 // Add services to the container.
 
