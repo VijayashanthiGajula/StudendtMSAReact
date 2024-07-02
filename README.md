@@ -4,10 +4,10 @@
 
   # Planning 
   I am planning to build a school management system with two user roles i.e, Admin and student, multiple Intakes, multiple courses in each Intake.
-  > Basic Features: 
+  Basic Features: 
    A student can enroll into multiple course an.
    Admin can perform CRUD operations on Courses.
-> Advanced Features: 
+ Advanced Features: 
    A student can Register, Login.
    Admin can  can Register, Login.
 
