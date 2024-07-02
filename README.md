@@ -1,7 +1,7 @@
 # StudendtMSAReact
-Requirements:
+  #Requirements:
 
-#Planning 
+  #Planning 
   # Technologies I am going to use in this project
     Front End: React app with Type Script
     Back End: Rest API,.Net 8.0, C#, EF Core,Repository pattern 
