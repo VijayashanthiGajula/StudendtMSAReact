@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using StudendtMSAReact.Context;// reffering to context file
+using StudendtMSAReact.Context;
+using StudendtMSAReact.Repositories.Abstract;
+using StudendtMSAReact.Repositories.Concrete;// reffering to context file
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+// Register repository with DI container
+builder.Services.AddScoped<ICourseRepo, CourseRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
