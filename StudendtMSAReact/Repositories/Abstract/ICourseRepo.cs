@@ -10,7 +10,7 @@ namespace StudendtMSAReact.Repositories.Abstract
             Task<Course> GetCourseByIdAsync(int id);
             Task AddCourseAsync(Course course);
             Task UpdateCourseAsync(Course course);
-            Task DeleteCourseAsync(int id);
+            Task<bool> DeleteCourseAsync(int id);
             Task<bool> CourseExistsAsync(int id);
             Task BulkAddCoursesAsync(IEnumerable<Course> courses);
         

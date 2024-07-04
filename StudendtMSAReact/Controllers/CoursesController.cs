@@ -16,7 +16,7 @@ namespace StudendtMSAReact.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly StudnetDBContext _context;
+        //private readonly StudnetDBContext _context;
         private readonly CourseRepo _courseRepo;
 
         public CoursesController(CourseRepo courseRepo)
@@ -45,7 +45,15 @@ namespace StudendtMSAReact.Controllers
 
             return Ok(course);
         }
-
+        // POST: api/Courses
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Course>> PostCourse(Course course)
+        {
+            await _courseRepo.AddCourseAsync(course);
+            return CreatedAtAction("GetCourse", new { id = course.Id }, course);
+        }
+        
         // PUT: api/Courses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -54,17 +62,17 @@ namespace StudendtMSAReact.Controllers
             if (id != course.Id)
             {
                 return BadRequest();
-            }
-
-            _context.Entry(course).State = EntityState.Modified;
+            }       
 
             try
             {
-                await _context.SaveChangesAsync();
+               // var r = await _courseRepo.GetCourseByIdAsync(id);
+                await _courseRepo.UpdateCourseAsync(course);                
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CourseExists(id))
+
+                if (!await _courseRepo.CourseExistsAsync(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +83,18 @@ namespace StudendtMSAReact.Controllers
             }
 
             return NoContent();
-        }
-
-        // POST: api/Courses
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Course>> PostCourse(Course course)
-        {
-          await _courseRepo.AddCourseAsync(course);
-          return CreatedAtAction("GetCourse", new { id = course.Id }, course);
-        }
+        }      
 
         // DELETE: api/Courses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null)
+            bool result=await _courseRepo.DeleteCourseAsync(id);
+            if (result == false)
             {
                 return NotFound();
-            }
-
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
-
+            }  
             return NoContent();
-        }
-
-        private bool CourseExists(int id)
-        {
-            return _context.Courses.Any(e => e.Id == id);
-        }
+        }       
     }
 }

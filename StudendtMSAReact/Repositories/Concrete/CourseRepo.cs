@@ -43,21 +43,35 @@ namespace StudendtMSAReact.Repositories.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<bool> CourseExistsAsync(int id)
+        public async Task<bool> CourseExistsAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Courses.Any(e => e.Id == id);
         }
 
-        public Task DeleteCourseAsync(int id)
+        public async Task<bool> DeleteCourseAsync(int id)
         {
-            throw new NotImplementedException();
+            var course = await _context.Courses.FindAsync(id);
+            if (course != null)
+            {
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+                return true;
+            }else
+            {
+                return false;
+            }
+           
+        }      
+
+        public async Task UpdateCourseAsync(Course course)
+        {
+            _context.Entry(course).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+           
         }
-
-      
-
-        public Task UpdateCourseAsync(Course course)
+        private bool CourseExists(int id)
         {
-            throw new NotImplementedException();
+            return _context.Courses.Any(e => e.Id == id);
         }
     }
 }
