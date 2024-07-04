@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace StudendtMSAReact.Repositories.Concrete
 {
-    public class CourseRepo 
+    public class CourseRepo: ICourseRepo
     {
         private readonly StudnetDBContext _context;
         private DbSet<Course> _CourseRepo;
@@ -18,58 +18,46 @@ namespace StudendtMSAReact.Repositories.Concrete
             _context = context;
         }
 
-      
-        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
+        public async Task<IEnumerable<Course>> GetAllCoursesAsync()
         {
             return await _context.Courses.ToListAsync();
         }
-               
-        public async Task<ActionResult<Course>> GetCourse(long id)
+
+        public async Task<Course> GetCourseByIdAsync(int id)
         {
+
             var course = await _context.Courses.FindAsync(id);
+
             return course;
         }
-     
-        public async Task PutCourseAsync(long id, Course course)
-        {    
-            _context.Entry(course).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(id))
-                {
-                    return ;
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-
-      
-        public async Task<ActionResult<Course>> PostCourse(Course course)
+        public async Task AddCourseAsync(Course course)
         {
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
-            return course;
+           
         }
 
-        // DELETE: api/Courses/5
-        [HttpDelete("{id}")]
-        public void DeleteCourse(long id)
+        public Task BulkAddCoursesAsync(IEnumerable<Course> courses)
         {
-            Course course = _context.Courses.FirstOrDefault(e => e.Id == id);
-            _context.Courses.Remove(course);
+            throw new NotImplementedException();
         }
-             
-        private bool CourseExists(long id)
+
+        public Task<bool> CourseExistsAsync(int id)
         {
-            return _context.Courses.Any(e => e.Id == id);
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteCourseAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+      
+
+        public Task UpdateCourseAsync(Course course)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudendtMSAReact.Context;
 using StudendtMSAReact.Models;
+using StudendtMSAReact.Repositories.Concrete;
+using StudendtMSAReact.Repositories.Abstract;
 
 namespace StudendtMSAReact.Controllers
 {
@@ -15,31 +17,33 @@ namespace StudendtMSAReact.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly StudnetDBContext _context;
+        private readonly CourseRepo _courseRepo;
 
-        public CoursesController(StudnetDBContext context)
+        public CoursesController(CourseRepo courseRepo)
         {
-            _context = context;
+            _courseRepo = courseRepo;
         }
 
         // GET: api/Courses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-            return await _context.Courses.ToListAsync();
+            var Course = await _courseRepo.GetAllCoursesAsync();
+            return Ok(Course);
         }
 
         // GET: api/Courses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
+            var course = await _courseRepo.GetCourseByIdAsync(id);
 
             if (course == null)
             {
                 return NotFound();
             }
 
-            return course;
+            return Ok(course);
         }
 
         // PUT: api/Courses/5
@@ -78,10 +82,8 @@ namespace StudendtMSAReact.Controllers
         [HttpPost]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCourse", new { id = course.Id }, course);
+          await _courseRepo.AddCourseAsync(course);
+          return CreatedAtAction("GetCourse", new { id = course.Id }, course);
         }
 
         // DELETE: api/Courses/5

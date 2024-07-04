@@ -4,21 +4,17 @@ namespace StudendtMSAReact.Repositories.Abstract
 {
     public interface ICourseRepo
     {
-        //CRUD operation interfaces
-        //Creating an enity
-        Task AddCourseAsync(Course course);
-     
-        //Reading single or multiple entities
-        Task<IEnumerable<Course>> GetAllSoursesAsync();
-        Task<Course> GetCourseByIdAsync(long id);
-        Task<bool> CourseExistsAsync(long id);
+        
+        
+            Task<IEnumerable<Course>> GetAllCoursesAsync();
+            Task<Course> GetCourseByIdAsync(int id);
+            Task AddCourseAsync(Course course);
+            Task UpdateCourseAsync(Course course);
+            Task DeleteCourseAsync(int id);
+            Task<bool> CourseExistsAsync(int id);
+            Task BulkAddCoursesAsync(IEnumerable<Course> courses);
+        
 
-        //Update an entity
-        Task UpdateCourseAsync(Course course);
-        //Deleting an entity
-        Task DeleteCourseAsync(long id);
-       
-       
 
     }
 }
