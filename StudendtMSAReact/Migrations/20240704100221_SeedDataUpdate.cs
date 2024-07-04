@@ -2,10 +2,12 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace StudendtMSAReact.Migrations
 {
     /// <inheritdoc />
-    public partial class VJInitial : Migration
+    public partial class SeedDataUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,9 +16,9 @@ namespace StudendtMSAReact.Migrations
                 name: "Intakes",
                 columns: table => new
                 {
-                    IntakeId = table.Column<long>(type: "bigint", nullable: false)
+                    IntakeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IntakeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,11 +29,12 @@ namespace StudendtMSAReact.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
-                    IntakeId = table.Column<long>(type: "bigint", nullable: false)
+                    Fees = table.Column<int>(type: "int", nullable: false),
+                    IntakeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,6 +45,27 @@ namespace StudendtMSAReact.Migrations
                         principalTable: "Intakes",
                         principalColumn: "IntakeId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Intakes",
+                columns: new[] { "IntakeId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Term 1" },
+                    { 2, "Term 2" },
+                    { 3, "Term 3" },
+                    { 4, "Term 4" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "Id", "Capacity", "Fees", "IntakeId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 10, 500, 1, "Web Designs" },
+                    { 2, 10, 700, 1, "Web Development" },
+                    { 3, 10, 600, 1, "Mobile Development" }
                 });
 
             migrationBuilder.CreateIndex(

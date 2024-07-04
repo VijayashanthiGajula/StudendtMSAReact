@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;// use
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using StudendtMSAReact.Models;//Use
 
 namespace StudendtMSAReact.Context
@@ -15,6 +16,14 @@ namespace StudendtMSAReact.Context
         public DbSet<Intake> Intakes { get; set; }
         public DbSet<Course> Courses { get; set; }
 
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure the one-to-many relationship
+            modelBuilder.Entity<Intake>()
+                .HasMany(i => i.Courses)
+                .WithOne(c => c.Intake)
+                .HasForeignKey(c => c.IntakeId);
+            modelBuilder.Seed();
+        }
     }
 }

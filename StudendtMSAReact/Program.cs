@@ -4,6 +4,7 @@ using StudendtMSAReact.Repositories.Abstract;
 using StudendtMSAReact.Repositories.Concrete;// reffering to context file
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 //Connecting t database
 var connectionString = builder.Configuration.GetConnectionString("MyConnectionString");
@@ -17,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Register repository with DI container
-builder.Services.AddScoped<ICourseRepo, CourseRepo>();
+builder.Services.AddScoped<CourseRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,5 +33,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+//app.MapCourseEndpoints();   app.MapIntakeEndpoints();
+
+
 
 app.Run();

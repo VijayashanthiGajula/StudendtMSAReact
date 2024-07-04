@@ -2,58 +2,76 @@
 using StudendtMSAReact.Context;
 using StudendtMSAReact.Models;
 using StudendtMSAReact.Repositories.Abstract;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StudendtMSAReact.Repositories.Concrete
 {
-    public class CourseRepo : ICourseRepo
+    public class CourseRepo 
     {
-        private readonly StudnetDBContext _Context;
+        private readonly StudnetDBContext _context;
         private DbSet<Course> _CourseRepo;
+     
         public CourseRepo(StudnetDBContext context)
         {
-            _Context = context;
-            _CourseRepo = _Context.Set<Course>();
+            _context = context;
         }
 
-        public async Task AddCourseAsync(Course course)
+      
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-            await _CourseRepo.AddAsync(course);
+            return await _context.Courses.ToListAsync();
         }
-
-       
-
-        public Task<bool> CourseExistsAsync(long id)
+               
+        public async Task<ActionResult<Course>> GetCourse(long id)
         {
-            throw new NotImplementedException();
+            var course = await _context.Courses.FindAsync(id);
+            return course;
+        }
+     
+        public async Task PutCourseAsync(long id, Course course)
+        {    
+            _context.Entry(course).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CourseExists(id))
+                {
+                    return ;
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
-
-        public async Task<IEnumerable<Course>> GetAllSoursesAsync()
+      
+        public async Task<ActionResult<Course>> PostCourse(Course course)
         {
-            return await _CourseRepo.ToListAsync();            
+            _context.Courses.Add(course);
+            await _context.SaveChangesAsync();
+
+            return course;
         }
 
-        public async Task<Course> GetCourseByIdAsync(long id)
+        // DELETE: api/Courses/5
+        [HttpDelete("{id}")]
+        public void DeleteCourse(long id)
         {
-            return await _CourseRepo.FirstOrDefaultAsync(e => e.Id == id);
+            Course course = _context.Courses.FirstOrDefault(e => e.Id == id);
+            _context.Courses.Remove(course);
         }
-
-        public async Task UpdateCourseAsync(Course course)
+             
+        private bool CourseExists(long id)
         {
-            _CourseRepo.Update(course);
-        }
-
-        public async Task DeleteCourseAsync(long id)
-        {  
-            var course = await GetCourseByIdAsync(id);
-            if (course != null)
-             {
-               _Context.Courses.Remove(course);            
-             }            
-        }
-        public async Task SaveChangesAsync()
-        {
-            await _Context.SaveChangesAsync();
+            return _context.Courses.Any(e => e.Id == id);
         }
     }
 }
+
+
