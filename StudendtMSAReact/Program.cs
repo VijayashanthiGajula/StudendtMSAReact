@@ -18,7 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Register repository with DI container
-builder.Services.AddScoped<CourseRepo>();
+builder.Services.AddScoped<ICourseRepo, CourseRepo>();
+builder.Services.AddScoped<IIntakesRepo, IntakesRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

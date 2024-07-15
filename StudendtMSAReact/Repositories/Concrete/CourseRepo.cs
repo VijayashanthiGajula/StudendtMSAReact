@@ -11,7 +11,7 @@ namespace StudendtMSAReact.Repositories.Concrete
     public class CourseRepo: ICourseRepo
     {
         private readonly StudnetDBContext _context;
-        private DbSet<Course> _CourseRepo;
+        //private DbSet<Course> _CourseRepo;
      
         public CourseRepo(StudnetDBContext context)
         {

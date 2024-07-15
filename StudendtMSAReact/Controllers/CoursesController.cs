@@ -17,9 +17,9 @@ namespace StudendtMSAReact.Controllers
     public class CoursesController : ControllerBase
     {
         //private readonly StudnetDBContext _context;
-        private readonly CourseRepo _courseRepo;
+        private readonly ICourseRepo _courseRepo;
 
-        public CoursesController(CourseRepo courseRepo)
+        public CoursesController(ICourseRepo courseRepo)
         {
             _courseRepo = courseRepo;
         }

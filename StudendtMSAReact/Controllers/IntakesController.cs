@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudendtMSAReact.Context;
 using StudendtMSAReact.Models;
+using StudendtMSAReact.Repositories.Abstract;
 
 namespace StudendtMSAReact.Controllers
 {
@@ -14,53 +15,61 @@ namespace StudendtMSAReact.Controllers
     [ApiController]
     public class IntakesController : ControllerBase
     {
-        private readonly StudnetDBContext _context;
+        private readonly IIntakesRepo _IntakesRepo;
 
-        public IntakesController(StudnetDBContext context)
+        public IntakesController(IIntakesRepo IntakesRepo)
         {
-            _context = context;
-        }
+            _IntakesRepo = IntakesRepo;     }
 
         // GET: api/Intakes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Intake>>> GetIntakes()
         {
-            return await _context.Intakes.ToListAsync();
+            var Intake = await _IntakesRepo.GetAllIntakesAsync();
+            return Ok(Intake);
         }
 
         // GET: api/Intakes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Intake>> GetIntake(int id)
         {
-            var intake = await _context.Intakes.FindAsync(id);
+            var Intake = await _IntakesRepo.GetIntakeByIdAsync(id);
 
-            if (intake == null)
+            if (Intake == null)
             {
                 return NotFound();
             }
 
-            return intake;
+            return Ok(Intake);
+        }
+        // POST: api/Intakes
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Intake>> PostIntake(Intake Intake)
+        {
+            await _IntakesRepo.AddIntakeAsync(Intake);
+            return CreatedAtAction("GetIntake", new { id = Intake.IntakeId }, Intake);
         }
 
         // PUT: api/Intakes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIntake(int id, Intake intake)
+        public async Task<IActionResult> PutIntake(int id, Intake Intake)
         {
-            if (id != intake.IntakeId)
+            if (id != Intake.IntakeId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(intake).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                // var r = await _IntakesRepo.GetIntakeByIdAsync(id);
+                await _IntakesRepo.UpdateIntakeAsync(Intake);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!IntakeExists(id))
+
+                if (!await _IntakesRepo.IntakeExistsAsync(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +82,16 @@ namespace StudendtMSAReact.Controllers
             return NoContent();
         }
 
-        // POST: api/Intakes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Intake>> PostIntake(Intake intake)
-        {
-            _context.Intakes.Add(intake);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetIntake", new { id = intake.IntakeId }, intake);
-        }
-
         // DELETE: api/Intakes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIntake(int id)
         {
-            var intake = await _context.Intakes.FindAsync(id);
-            if (intake == null)
+            bool result = await _IntakesRepo.DeleteIntakeAsync(id);
+            if (result == false)
             {
                 return NotFound();
             }
-
-            _context.Intakes.Remove(intake);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool IntakeExists(int id)
-        {
-            return _context.Intakes.Any(e => e.IntakeId == id);
         }
     }
 }

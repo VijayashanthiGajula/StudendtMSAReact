@@ -1,38 +1,74 @@
-﻿using StudendtMSAReact.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using StudendtMSAReact.Context;
+using StudendtMSAReact.Models;
 using StudendtMSAReact.Repositories.Abstract;
 
 namespace StudendtMSAReact.Repositories.Concrete
 {
-    public class IntakesRepo : IIntakes
+    public class IntakesRepo : IIntakesRepo
     {
-        public Task AddIntakeAsync(Intake intake)
+
+        private readonly StudnetDBContext _context;
+       // private DbSet<Intake> IntakeRepo;
+        public IntakesRepo(StudnetDBContext context)
+        {
+            _context = context;
+        }
+        public async Task<IEnumerable<Intake>> GetAllIntakesAsync()
+        {
+            return await _context.Intakes.ToListAsync();
+        }
+
+        public async Task<Intake> GetIntakeByIdAsync(int id)
+        {
+
+            var Intake = await _context.Intakes.FindAsync(id);
+
+            return Intake;
+        }
+        public async Task AddIntakeAsync(Intake Intake)
+        {
+            _context.Intakes.Add(Intake);
+            await _context.SaveChangesAsync();
+
+
+        }
+
+        public Task BulkAddIntakesAsync(IEnumerable<Intake> Intakes)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteIntakeAsync(long id)
+        public async Task<bool> IntakeExistsAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Intakes.Any(e => e.IntakeId == id);
         }
 
-        public Task<IEnumerable<Intake>> GetAllSoursesAsync()
+        public async Task<bool> DeleteIntakeAsync(int id)
         {
-            throw new NotImplementedException();
+            var Intake = await _context.Intakes.FindAsync(id);
+            if (Intake != null)
+            {
+                _context.Intakes.Remove(Intake);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
-        public Task<Course> GetIntakeByIdAsync(long id)
+        public async Task UpdateIntakeAsync(Intake Intake)
         {
-            throw new NotImplementedException();
-        }
+            _context.Entry(Intake).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-        public Task<bool> IntakeExistsAsync(long id)
-        {
-            throw new NotImplementedException();
         }
-
-        public Task UpdateIntakeAsync(Intake intake)
+        private bool IntakeExists(int id)
         {
-            throw new NotImplementedException();
+            return _context.Intakes.Any(e => e.IntakeId == id);
         }
     }
 }
