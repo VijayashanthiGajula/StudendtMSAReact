@@ -10,7 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("MyConnectionString");
 builder.Services.AddDbContext<StudnetDBContext>(options =>
       options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
-
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -28,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+// Use CORS policy
+app.UseCors("AllowAllOrigins");
 
 app.UseHttpsRedirection();
 
