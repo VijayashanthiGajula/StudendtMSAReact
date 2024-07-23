@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { baseUrl } from "../constants/url.constants";
-import { IIntake } from "../types/global.typing";
+import { baseUrl } from "../../constants/url.constants";
+import { IIntake } from "../../types/global.typing";
 import { Button } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import moment from "moment";
+ 
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Intakes: React.FC = () => {
-  const [intakes, setintakes] = useState<IIntake[]>([]);
+  const [intakes, setIntakes] = useState<IIntake[]>([]);
   const location = useLocation();
   const redirect = useNavigate();
 
@@ -18,7 +18,7 @@ const Intakes: React.FC = () => {
   const fetchintakesList = async () => {
     try {
       const response = await axios.get<IIntake[]>(baseUrl);
-      setintakes(response.data);
+      setIntakes(response.data);
       if (location?.state) {
         Swal.fire({
           icon: "success",
@@ -27,7 +27,7 @@ const Intakes: React.FC = () => {
         redirect(location.pathname, { replace: true });
       }
     } catch (error) {
-      alert("An Error Happend");
+      alert("An Error Happened");
     }
   };
 
@@ -38,11 +38,11 @@ const Intakes: React.FC = () => {
   //    console.log(intakes);
 
   const redirectToEditPage = (id: number) => {
-    redirect(`/intakes/edit/${id}`);
+    redirect(`/Intakes/edit/${id}`);
   };
 
   const redirectToDeletePage = (id: number) => {
-    redirect(`/intakes/delete/${id}`);
+    redirect(`/Intakes/delete/${id}`);
   };
 
   return (

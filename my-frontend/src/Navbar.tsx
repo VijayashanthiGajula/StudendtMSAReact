@@ -29,6 +29,9 @@ const Navbar: React.FC = () => {
             <Link to="/Intakes">Products</Link>
           </li>
           <li onClick={toggleNavBar}>
+            <Link to="/Courses">Courses</Link>
+          </li>
+          <li onClick={toggleNavBar}>
             <Link to="/Intakes/add">Add Product</Link>
           </li>
           <li onClick={toggleNavBar}>

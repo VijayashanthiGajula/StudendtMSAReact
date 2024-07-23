@@ -1,10 +1,10 @@
 import React from "react";
 //import "./add-product.scss";
 import { TextField, Button } from "@mui/material";
-import { IIntake } from "../types/global.typing";
+import { IIntake } from "../../types/global.typing";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { baseUrl } from "../constants/url.constants";
+import { baseUrl } from "../../constants/url.constants";
 
 const AddIntake: React.FC = () => {
   const [intake, setIntake] = React.useState<Partial<IIntake>>({ name: "" });
