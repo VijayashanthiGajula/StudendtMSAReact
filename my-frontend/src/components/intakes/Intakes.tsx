@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../constants/url.constants";
-import { IIntake } from "../../types/global.typing";
+import { IIntake } from "../../types/intakesInterface";
 import { Button } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
- 
+import { Edit, Delete } from "@mui/icons-material"; 
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 

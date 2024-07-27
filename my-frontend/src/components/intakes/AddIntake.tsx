@@ -1,7 +1,7 @@
 import React from "react";
 //import "./add-product.scss";
 import { TextField, Button } from "@mui/material";
-import { IIntake } from "../../types/global.typing";
+import { IIntake } from "../../types/intakesInterface";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../../constants/url.constants";
@@ -40,6 +40,7 @@ const AddIntake: React.FC = () => {
   return (
     <div className="add-product">
       <h2>Add New Product</h2>
+     
       <TextField
         autoComplete="off"
         label="Intake Name"
