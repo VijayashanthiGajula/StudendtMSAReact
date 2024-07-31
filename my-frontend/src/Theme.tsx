@@ -9,6 +9,15 @@ const Theme = () => {
         palette: {
             mode: darkMode ? 'dark' : 'light',
         },
+        breakpoints: {
+            values: {
+              lg: 1024,
+              md: 640,
+              sm: 412,
+              xl: 1280,
+              xs: 375,
+            },
+        },
     });
 
     const handleThemeChange = () => {

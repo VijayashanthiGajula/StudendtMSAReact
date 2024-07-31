@@ -13,17 +13,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { CenterFocusStrong } from '@mui/icons-material';
 
 const Sample = () => {
     const [intakes, setIntakes] = useState<IIntake[]>([]);
     const [selectedIntake, setSelectedIntake] = useState<IIntake | null>(null);
     const [open, setOpen] = useState(false);
-    const location = useLocation();
-    const redirect = useNavigate();
+    // const location = useLocation();
+    // const redirect = useNavigate();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
+    const xs = useMediaQuery(theme.breakpoints.down('xs'));
     useEffect(() => {
         fetchIntakesList();
     }, []);
@@ -32,13 +32,13 @@ const Sample = () => {
         try {
             const response = await axios.get<IIntake[]>(baseUrl);
             setIntakes(response.data);
-            if (location?.state) {
-                Swal.fire({
-                    icon: "success",
-                    title: location?.state?.message,
-                });
-                redirect(location.pathname, { replace: true });
-            }
+            // if (location?.state) {
+            //     Swal.fire({
+            //         icon: "success",
+            //         title: location?.state?.message,
+            //     });
+            //     redirect(location.pathname, { replace: true });
+            // }
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -104,55 +104,56 @@ const Sample = () => {
     };
 
     const columns: GridColDef[] = [
-        { field: 'intakeId', headerName: 'ID', width: 150 },
-        { field: 'name', headerName: 'Name', width: 200 },
-        // Add more columns as needed
-        {
-            field: 'edit',
-            headerName: 'Edit',
-            width: 100,
+        { field: 'intakeId', headerName: 'ID', headerAlign: 'center', flex: 1,align: 'center' , minWidth:100 },
+        { field: 'name', headerName: 'Name', headerAlign: 'center', flex: 2 ,align: 'center'  , minWidth:100 },
+        { field: 'edit', headerName: 'Edit', headerAlign: 'center', flex: 1 ,align: 'center' , minWidth:100,
             renderCell: (params: GridRenderCellParams) => (
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleEdit(params.row)}
+                <Button variant="contained"
+                    color="primary" onClick={() => handleEdit(params.row)}
+                    size='small'
                     sx={{
-                        width: 'auto',
-                        minWidth: isMobile ? '60px' : '80px',
-                        fontSize: isMobile ? '0.75rem' : '1rem',
-                        padding: isMobile ? '6px' : '8px 16px',
-                    }}
-                >
+                          padding: xs ? '3px' : '8px ',
+                    }} >
                     Edit
                 </Button>
-            ),
+            )
         },
         {
-            field: 'delete',
-            headerName: 'Delete',
-            width: 100,
+            field: 'delete', headerName: 'Delete', headerAlign: 'center', flex: 1,align: 'center', minWidth:100,
             renderCell: (params: GridRenderCellParams) => (
                 <Button
                     variant="contained"
                     color="secondary"
+                    size='small'
                     onClick={() => handleDelete(params.row.intakeId)}
-                >
+                    sx={{                        
+                        padding: xs ? '3px' : '8px ',
+                    }}  >
                     Delete
                 </Button>
-            ),
+            ) 
         },
     ];
+    const rows = intakes.map(intake => ({
+        ...intake,
+        id: intake.intakeId.toString()
+    }))
 
     return (
-        <Container style={{ height: 400, width: isMobile ? '100%' : '80%' }}>
-            <DataGrid
-                columns={columns}
-                rows={intakes.map(intake => ({
-                    ...intake,
-                    id: intake.intakeId.toString() // Ensure ID is a string as DataGrid expects a string or number
-                }))}
-                autoHeight
-            />
+        <Box sx={{   width: '90%', maxWidth: 'lg', margin: '0 auto' }}>
+        <DataGrid
+          columns={columns}
+          rows={rows}
+          autoHeight 
+          autoPageSize         
+          sx={{  
+            minWidth:400,
+            width:'90%',
+            '& .MuiDataGrid-cell': {
+                flex: 1,
+                minWidth: 100, },
+          }}
+        />
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit Intake</DialogTitle>
                 <DialogContent>
@@ -168,7 +169,7 @@ const Sample = () => {
                     {/* Add more fields as needed */}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="secondary" 
+                    <Button onClick={handleClose} color="secondary"
                     >
                         Cancel
                     </Button>
@@ -177,7 +178,8 @@ const Sample = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </Container>
+        </Box>
+
     );
 };
 

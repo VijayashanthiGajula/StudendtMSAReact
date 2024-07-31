@@ -1,111 +1,154 @@
 import React, { useState } from 'react';
-import { Menu, Close } from '@mui/icons-material';
+// import { Menu, Close } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { Box, IconButton, Drawer, List, ListItem, Typography } from '@mui/material';
+import { Box, IconButton, Drawer, List, ListItem, Typography, Stack, Divider, ListItemButton, ListItemText, Toolbar, AppBar, CssBaseline, Button, FormGroup, FormControlLabel, Switch } from '@mui/material';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { AccountCircle } from '@mui/icons-material';
 
 const Navbar: React.FC = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  
+const drawerWidth = 240; 
+const navItems = [
+  { id: 1, title: "Home", path: "/" },
+  { id: 2, title: "Intakes", path: "/Intakes" },
+  { id: 3, title: "Courses", path: "/Courses" },
+  { id: 4, title: "Students", path: "/Sample" },
+];
+const [mobileOpen, setMobileOpen] = React.useState(false);
+const handleDrawerToggle = () => {
+  setMobileOpen((prevState) => !prevState);
+}
+const drawer = (
+  <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Typography variant="h6" sx={{ my: 2 }}>
+      MUI
+    </Typography>
+    <Divider />
+    <List>
+      {navItems.map((item) => (         
+        <ListItem key={item.id} disablePadding>
+        <ListItemButton component={Link} to={item.path} sx={{ textAlign: 'center' }}>
+          <ListItemText primary={item.title} />
+        </ListItemButton>
+      </ListItem>
+      ))}
+    </List>
+  </Box>
+);
+/** objects for mode  */
+const [mode, setMode] = React.useState(true);
+const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setMode(event.target.checked);
+};
+const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  setAnchorEl(event.currentTarget);
+};
+const handleClose = () => {
+  setAnchorEl(null);
+};
 
-  const toggleNavBar = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <Box>
-      {/* Menu Icon for Mobile View */}
-      <IconButton onClick={toggleNavBar} color="inherit" sx={{ display: { xs: 'block', md: 'none' } }}>
-        {open ? <Close /> : <Menu />}
-      </IconButton>
-
-      {/* Drawer for Mobile View */}
-      <Drawer
-        anchor="left"
-        open={open}
-        onClose={toggleNavBar}
-        PaperProps={{
-          sx: {
-            width: 240,
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: 2,
-          },
+  return (    
+    <Box sx={{ flexGrow: 1 }}>
+       <FormGroup>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={mode}
+              onChange={handleChange}
+              aria-label="login switch"
+            />
+          }
+          label={mode ? 'Dark' : 'Light'}
+        />
+        </FormGroup>
+      
+        
+    <CssBaseline />
+    <AppBar position='static'>
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { sm: 'none' } }}
+        >
+          <MenuIcon />
+        </IconButton>
+        {/* <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+        >
+          UA College
+        </Typography> */}
+         <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            MSA College
+          </Typography>
+          
+        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          {navItems.map((item) => (
+            <Button key={item.id} sx={{ color: '#fff' }} component={Link} to={item.path}>
+              {item.title}
+            </Button>
+          ))}
+        </Box>
+        {mode && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Admin</MenuItem>
+                <MenuItem onClick={handleClose}>Account settings</MenuItem>
+              </Menu>
+            </div>
+          )}
+      </Toolbar>
+    </AppBar>
+    <nav>
+      <Drawer        
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
         }}
         sx={{
-          display: { xs: 'block', md: 'none' },
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
-        <Box sx={{ width: 240, height: '100%', display: 'flex', flexDirection: 'column', padding: 2 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            UA_College
-          </Typography>
-          <List>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Home
-              </Link>
-            </ListItem>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/Sample" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Sample
-              </Link>
-            </ListItem>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/Intakes" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Intakes
-              </Link>
-            </ListItem>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/Intakes/add" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Add an Intake
-              </Link>
-            </ListItem>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/Courses" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Courses
-              </Link>
-            </ListItem>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/Courses/add" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Add Courses
-              </Link>
-            </ListItem>
-            <ListItem button onClick={toggleNavBar}>
-              <Link to="/Intakes/edit" style={{ textDecoration: 'none', color: 'inherit' }}>
-                Edit Intake
-              </Link>
-            </ListItem>
-          </List>
-        </Box>
+        {drawer}
       </Drawer>
-
-      {/* Navigation Links for Larger Screens */}
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/Sample">Sample</Link>
-          </li>
-          <li>
-            <Link to="/Intakes">Intakes</Link>
-          </li>
-          <li>
-            <Link to="/Intakes/add">Add an Intake</Link>
-          </li>
-          <li>
-            <Link to="/Courses">Courses</Link>
-          </li>
-          <li>
-            <Link to="/Courses/add">Add Courses</Link>
-          </li>
-          <li>
-            <Link to="/Intakes/edit">Edit Intake</Link>
-          </li>
-        </ul>
-      </Box>
-    </Box>
+    </nav>
+     
+  </Box>
   );
 };
 
