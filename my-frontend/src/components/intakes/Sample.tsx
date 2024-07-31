@@ -110,7 +110,7 @@ const Sample = () => {
             renderCell: (params: GridRenderCellParams) => (
                 <Button variant="contained"
                     color="primary" onClick={() => handleEdit(params.row)}
-                    size='small'
+                    size='small'  
                     sx={{
                           padding: xs ? '3px' : '8px ',
                     }} >

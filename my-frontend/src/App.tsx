@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import Routes from './Routes';
 import Navbar from './Navbar';
-import Theme from './Theme'
+import {ThemeProviderWrapper}   from './Theme2';
 import AppRoutes from './Routes'; 
+import ThemeComponent from './ThemeComponent';
 
 const App: React.FC = () => {
   return (
-    <div>  
-      <Theme/> 
+    <ThemeProviderWrapper >  
+      <ThemeComponent />      
       <Navbar />  
-      <AppRoutes/> 
-     
-    </div>
+      <AppRoutes/>
+      </ThemeProviderWrapper > 
 
   );
 };
