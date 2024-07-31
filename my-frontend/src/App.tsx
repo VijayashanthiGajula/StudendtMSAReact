@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Routes from './Routes';
 import Navbar from './Navbar';
-import {ThemeProviderWrapper}   from './Theme2';
-import AppRoutes from './Routes'; 
-import ThemeComponent from './ThemeComponent';
+import {ThemeProviderWrapper}   from './constants/ThemeConstants';
+import AppRoutes from './constants/Routes'; 
+import ThemeComponent from './components/theme/ThemeComponent';
 
 const App: React.FC = () => {
   return (
