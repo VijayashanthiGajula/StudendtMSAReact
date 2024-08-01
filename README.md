@@ -1,6 +1,6 @@
 # StudendtMSAReact
   ## Project Backlogs
-    ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/19e16d86-6f3b-49da-bc14-71513e401f4e)
+  ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/19e16d86-6f3b-49da-bc14-71513e401f4e)
 
   # Planning 
     I am planning to build a school management system with two user roles i.e, Admin and student, multiple Intakes, multiple courses in each Intake.
@@ -40,4 +40,4 @@
     Deployment: AZURE web apps and Azure SQL    
 
   # Data modelling:
-    ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/d4a7e418-c9fc-4804-8d68-739141a812fa)
+  ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/d4a7e418-c9fc-4804-8d68-739141a812fa)
