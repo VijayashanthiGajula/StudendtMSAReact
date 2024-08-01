@@ -1,5 +1,5 @@
 # StudendtMSAReact
-  # Requirements:
+  ## Requirements:
   ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/19e16d86-6f3b-49da-bc14-71513e401f4e)
 
   # Planning 
@@ -10,19 +10,19 @@
  Advanced Features: 
    A student can Register, Login and enroll into a course.
    Admin can  can Register, Login, and can access the intakes , courses, students list.
-   # Sprint 1 Backlogs:
+   ## Sprint 1 Backlogs:
    Creating Repositories and models for Intake, Course using ASP.Net Core and its dependency injection.
    Creating API end points of Intake, Course using ASP.Net core API controllers.     
    Integrating EF core to map the peristent data from SQL Server ( Code first approach)
-   Front End
-     > React JS with TypeScript for Type-Safety, 
+   ### Front End
+     React JS with TypeScript for Type-Safety, 
      React hooks for handling data and handling side effects,
      Axios for http requests,
      React router for routing 
      Material UI for styling responsive UI components and React redux for state management.  
      Dark and Light modes
      
-   # Sprint 2 Backlogs:
+   ## Sprint 2 Backlogs:
    Code Identity for Admin and studnet authenticity and authorization services. (Registration and login along with Roles)
    Data migration to AZURE SQL
    Docker Containerazation
