@@ -3,19 +3,19 @@
   ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/19e16d86-6f3b-49da-bc14-71513e401f4e)
 
   # Planning 
-  I am planning to build a school management system with two user roles i.e, Admin and student, multiple Intakes, multiple courses in each Intake.
-  Basic Features: 
-   A student can enroll into multiple course an.
-   Admin can perform CRUD operations on Intakes, Courses and can view Students.
- Advanced Features: 
+    I am planning to build a school management system with two user roles i.e, Admin and student, multiple Intakes, multiple courses in each Intake.
+    Basic Features: 
+    A student can enroll into multiple course an.
+    Admin can perform CRUD operations on Intakes, Courses and can view Students.
+    ## Advanced Features: 
    A student can Register, Login and enroll into a course.
    Admin can  can Register, Login, and can access the intakes , courses, students list.
    ## Sprint 1 Backlogs:
-   ### Back End
-   Creating Repositories and models for Intake, Course using ASP.Net Core and its dependency injection.
-   Creating API end points of Intake, Course using ASP.Net core API controllers.     
-   Integrating EF core to map the peristent data from SQL Server ( Code first approach)
-   Git hub version controlling
+     ### Back End
+     Creating Repositories and models for Intake, Course using ASP.Net Core and its dependency injection,
+     Creating API end points of Intake, Course using ASP.Net core API controllers,     
+     Integrating EF core to map the peristent data from SQL Server ( Code first approach),
+     Git hub version controlling.
    ### Front End
      React JS with TypeScript for Type-Safety, 
      React hooks for handling data and handling side effects,
@@ -27,10 +27,10 @@
      
    ## Sprint 2 Backlogs:
    ### Advanced features and deployment migration
-   Code Identity for Admin and studnet authenticity and authorization services. (Registration and login along with Roles)
-   Data migration to AZURE SQL
-   Docker Containerazation
-   Website depolyment on Azure Web apps      
+     Code Identity for Admin and studnet authenticity and authorization services. (Registration and login along with Roles)
+     Data migration to AZURE SQL
+     Docker Containerazation
+     Website depolyment on Azure Web apps      
 
   # Technologies I am going to use in this project
     Front End: React app with Type Script, Material UI, react Libraries (React hooks, React Redux)
