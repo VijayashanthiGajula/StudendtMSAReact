@@ -1,9 +1,9 @@
 import React from 'react'
 
-const EditContact:React.FC = () => {
+const EditIntake:React.FC = () => {
   return (
     <div>Edit page </div>
   )
 }
 
-export default EditContact
+export default EditIntake

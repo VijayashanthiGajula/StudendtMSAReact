@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../constants/url.constants";
-import { IIntake } from "../../types/global.typing";
-import { Button } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
- 
+import { IIntake } from "../../types/intakesInterface";
+import { Button, Container, styled } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material"; 
 import { useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 const Intakes: React.FC = () => {
   const [intakes, setIntakes] = useState<IIntake[]>([]);
   const location = useLocation();
   const redirect = useNavigate();
-
   console.log(location);
-
   const fetchintakesList = async () => {
     try {
       const response = await axios.get<IIntake[]>(baseUrl);
@@ -30,63 +34,64 @@ const Intakes: React.FC = () => {
       alert("An Error Happened");
     }
   };
-
   useEffect(() => {
     fetchintakesList();
   }, []);
-
-  //    console.log(intakes);
-
   const redirectToEditPage = (id: number) => {
     redirect(`/Intakes/edit/${id}`);
   };
-
   const redirectToDeletePage = (id: number) => {
     redirect(`/Intakes/delete/${id}`);
   };
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+  
 
   return (
-    <div className="intakes">
+    <Container className="intakes">
       <h1>intakes List</h1>
       {intakes.length === 0 ? (
         <h1>No intakes</h1>
       ) : (
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-              </tr>
-            </thead>
-            <tbody>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 8, md: 10 }}>
               {intakes.map((intake) => (
-                <tr key={intake.intakeId}>
-                  <td>{intake.name}</td>
-
-                  <td>
-                    <Button
-                      variant="outlined"
-                      color="warning"
-                      sx={{ mx: 3 }}
-                      onClick={() => redirectToEditPage(intake.intakeId)}
-                    >
-                      <Edit />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => redirectToDeletePage(intake.intakeId)}
-                    >
-                      <Delete />
-                    </Button>
-                  </td>
-                </tr>
+                <Grid item xs={4} sm={8} md={12} key={intake.intakeId}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <div>{intake.name}</div>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ mx: 1 }}
+                        onClick={() => redirectToEditPage(intake.intakeId)}
+                      >Edit
+                        <EditIcon />
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        sx={{ mx: 1 }}
+                        onClick={() => redirectToDeletePage(intake.intakeId)}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </Grid>
+        
       )}
-    </div>
+
+ 
+    </Container>
   );
 };
 

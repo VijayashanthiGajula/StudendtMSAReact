@@ -53,8 +53,7 @@ const Courses: React.FC = () => {
         <div className="table-wrapper">
           <table>
             <thead>
-              <tr>
-                <th>Title</th>
+              <tr>                
                 <th>Name</th>
                 <th>Capacity</th>
                 <th>Fees</th>
