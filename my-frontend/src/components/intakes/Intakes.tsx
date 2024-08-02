@@ -1,98 +1,109 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { baseUrl } from "../../constants/url.constants";
-import { IIntake } from "../../types/intakesInterface";
-import { Button, Container, styled } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material"; 
-import { useNavigate, useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
-
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../../Redux/store';
+import { getIntakes, createIntake, editIntake, deleteIntake } from '../../Redux/intakeActions';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, TextField, useMediaQuery, useTheme } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import AddIcon from '@mui/icons-material/Add';
 
 const Intakes: React.FC = () => {
-  const [intakes, setIntakes] = useState<IIntake[]>([]);
-  const location = useLocation();
-  const redirect = useNavigate();
-  console.log(location);
-  const fetchintakesList = async () => {
-    try {
-      const response = await axios.get<IIntake[]>(baseUrl);
-      setIntakes(response.data);
-      if (location?.state) {
-        Swal.fire({
-          icon: "success",
-          title: location?.state?.message,
-        });
-        redirect(location.pathname, { replace: true });
-      }
-    } catch (error) {
-      alert("An Error Happened");
-    }
-  };
+  const dispatch: AppDispatch = useDispatch();
+  const { data: intakes, status, error } = useSelector((state: RootState) => state.intakes);
+
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));  
+  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [formData, setFormData] = useState({ intakeId: '', name: '' });
+
   useEffect(() => {
-    fetchintakesList();
-  }, []);
-  const redirectToEditPage = (id: number) => {
-    redirect(`/Intakes/edit/${id}`);
+    if (status === 'idle') {
+      dispatch(getIntakes());
+    }
+  }, [status, dispatch]);
+
+  const handleAddClick = () => setOpen(true);
+  const handleEditClick = (params: GridRenderCellParams) => {
+    setFormData({ intakeId: params.row.intakeId, name: params.row.name });
+    setEditOpen(true);
   };
-  const redirectToDeletePage = (id: number) => {
-    redirect(`/Intakes/delete/${id}`);
+  const handleDeleteClick = (intakeId: number) => dispatch(deleteIntake(intakeId));
+  const handleSave = () => {
+    if (formData.intakeId) {
+      const intakeIdNumber = parseInt(formData.intakeId, 10);
+      dispatch(editIntake({ intakeId: intakeIdNumber, name: formData.name })).then(() => {
+        dispatch(getIntakes());
+        setFormData({ intakeId: '', name: '' });
+      });
+    } 
+    else {
+      dispatch(createIntake({ intakeId: 0, name: formData.name }));
+    }
+    setOpen(false);
+    setEditOpen(false);
+    setFormData({ intakeId: '', name: '' });
   };
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+
+  const columns: GridColDef[] = [
+    { field: 'intakeId', headerName: 'ID', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100 },
+    { field: 'name', headerName: 'Name', headerAlign: 'center', flex: 2, align: 'center', minWidth: 100 },
+    {
+      field: 'edit', headerName: 'Edit', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100,
+      renderCell: (params: GridRenderCellParams) => (
+        <Button variant="contained" color="primary" size='small' sx={{ padding: xs ? '3px' : '8px' }} onClick={() => handleEditClick(params)}>
+          Edit
+        </Button>
+      )
+    },
+    {
+      field: 'delete', headerName: 'Delete', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100,
+      renderCell: (params: GridRenderCellParams) => (
+        <Button variant="contained" color="secondary" size='small' sx={{ padding: xs ? '3px' : '8px' }} onClick={() => handleDeleteClick(params.row.intakeId)}>
+          Delete
+        </Button>
+      )
+    },
+  ];
+
+  const rows = intakes.map(intake => ({
+    ...intake,
+    id: intake.intakeId.toString()
   }));
-  
 
   return (
-    <Container className="intakes">
-      <h1>intakes List</h1>
-      {intakes.length === 0 ? (
-        <h1>No intakes</h1>
-      ) : (
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 8, md: 10 }}>
-              {intakes.map((intake) => (
-                <Grid item xs={4} sm={8} md={12} key={intake.intakeId}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <div>{intake.name}</div>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ mx: 1 }}
-                        onClick={() => redirectToEditPage(intake.intakeId)}
-                      >Edit
-                        <EditIcon />
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        sx={{ mx: 1 }}
-                        onClick={() => redirectToDeletePage(intake.intakeId)}
-                      >
-                        <DeleteIcon />
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              ))}
-            </Grid>
-        
-      )}
-
- 
+    <Container>
+      <h1>Intakes List</h1>
+      <Button variant="contained" color="primary" sx={{ m: 2 }} onClick={handleAddClick}>
+        Add Intake <AddIcon />
+      </Button>
+      <DataGrid 
+        columns={columns}
+        rows={rows} 
+        autoHeight 
+        sx={{ minWidth: 400, width: '90%', '& .MuiDataGrid-cell': { flex: 1, minWidth: 100 } }} 
+      />
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'failed' && <p>Error: {error}</p>}
+      <Dialog open={open || editOpen} onClose={() => { setOpen(false); setEditOpen(false); }}>
+        <DialogTitle>{formData.intakeId ? 'Edit Intake' : 'Add Intake'}</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Name"
+            fullWidth
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => { setOpen(false); setEditOpen(false); }}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
 
 export default Intakes;
+

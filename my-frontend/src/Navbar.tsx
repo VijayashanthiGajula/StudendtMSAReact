@@ -64,13 +64,7 @@ const Navbar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-          UA College
-        </Typography> */}
+        
           <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
             MSA College
           </Typography>

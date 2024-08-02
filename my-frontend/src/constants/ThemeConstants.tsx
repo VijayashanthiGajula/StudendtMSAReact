@@ -1,5 +1,5 @@
 import React, { createContext, useState, useMemo, useContext, ReactNode } from 'react';
-import { createTheme, ThemeProvider, CssBaseline, Theme, PaletteOptions } from '@mui/material';
+import { createTheme, ThemeProvider, CssBaseline, Theme } from '@mui/material';
 
 interface ThemeContextProps {
   darkMode: boolean;
@@ -14,13 +14,13 @@ const lightTheme = createTheme({
     primary: {        
       main: '#1e88e5 ',
       light: '#004500',
-      dark: '#9fa8cf',
+      dark: '#7d0577',
       contrastText: '#fff', // Replace this with your primary color
     },
     secondary: {
         main: '#963199 ',
         light: '#004500',
-        dark: '#9fa8cf',
+        dark: '#d11557',
         contrastText: '#fff'
     },
     text: {

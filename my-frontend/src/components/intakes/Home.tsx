@@ -8,7 +8,7 @@ const Home = () => {
       <h1>Welcome to UA_College</h1>
       <Button  variant="outlined"
         color="primary"
-        onClick={() => redirect("/Intakes")}
+        onClick={() => redirect("/extra")}
       >
         Intakes List
       </Button>
