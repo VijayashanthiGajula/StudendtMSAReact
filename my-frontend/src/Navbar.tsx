@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+      TechInnovate College
       </Typography>
       <Divider />
       <List>
@@ -64,15 +64,9 @@ const Navbar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-        >
-          UA College
-        </Typography> */}
+        
           <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            MSA College
+          TechInnovate  
           </Typography>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>

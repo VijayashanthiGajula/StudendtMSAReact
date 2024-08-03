@@ -32,13 +32,7 @@ const Sample = () => {
         try {
             const response = await axios.get<IIntake[]>(baseUrl);
             setIntakes(response.data);
-            // if (location?.state) {
-            //     Swal.fire({
-            //         icon: "success",
-            //         title: location?.state?.message,
-            //     });
-            //     redirect(location.pathname, { replace: true });
-            // }
+             
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -144,8 +138,7 @@ const Sample = () => {
         <DataGrid
           columns={columns}
           rows={rows}
-          autoHeight 
-          autoPageSize         
+          autoHeight        
           sx={{  
             minWidth:400,
             width:'90%',
@@ -154,10 +147,10 @@ const Sample = () => {
                 minWidth: 100, },
           }}
         />
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
                 <DialogTitle>Edit Intake</DialogTitle>
                 <DialogContent>
-                    <TextField
+                    <TextField                    
                         margin="dense"
                         name="name"
                         label="Name"
@@ -170,8 +163,7 @@ const Sample = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="secondary"
-                    >
-                        Cancel
+                    >  Cancel
                     </Button>
                     <Button onClick={handleSave} color="primary">
                         Save

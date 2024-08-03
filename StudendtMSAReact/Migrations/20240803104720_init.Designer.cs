@@ -11,8 +11,8 @@ using StudendtMSAReact.Context;
 namespace StudendtMSAReact.Migrations
 {
     [DbContext(typeof(StudnetDBContext))]
-    [Migration("20240704100221_SeedDataUpdate")]
-    partial class SeedDataUpdate
+    [Migration("20240803104720_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,32 +50,6 @@ namespace StudendtMSAReact.Migrations
                     b.HasIndex("IntakeId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 10,
-                            Fees = 500,
-                            IntakeId = 1,
-                            Name = "Web Designs"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 10,
-                            Fees = 700,
-                            IntakeId = 1,
-                            Name = "Web Development"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 10,
-                            Fees = 600,
-                            IntakeId = 1,
-                            Name = "Mobile Development"
-                        });
                 });
 
             modelBuilder.Entity("StudendtMSAReact.Models.Intake", b =>
@@ -93,28 +67,6 @@ namespace StudendtMSAReact.Migrations
                     b.HasKey("IntakeId");
 
                     b.ToTable("Intakes");
-
-                    b.HasData(
-                        new
-                        {
-                            IntakeId = 1,
-                            Name = "Term 1"
-                        },
-                        new
-                        {
-                            IntakeId = 2,
-                            Name = "Term 2"
-                        },
-                        new
-                        {
-                            IntakeId = 3,
-                            Name = "Term 3"
-                        },
-                        new
-                        {
-                            IntakeId = 4,
-                            Name = "Term 4"
-                        });
                 });
 
             modelBuilder.Entity("StudendtMSAReact.Models.Course", b =>
