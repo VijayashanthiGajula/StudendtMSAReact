@@ -51,7 +51,7 @@ const CourseSlice = createSlice({
       })
       .addCase(editCourse.fulfilled, (state, action: PayloadAction<ICourse>) => {
         state.status = 'succeeded';
-        const index = state.data.findIndex(intake => intake.intakeId === action.payload.intakeId);
+        const index = state.data.findIndex(course => course.id === action.payload.id);
         if (index !== -1) {
           state.data[index] = action.payload;
         }
@@ -65,7 +65,7 @@ const CourseSlice = createSlice({
       })
       .addCase(deleteCourse.fulfilled, (state, action: PayloadAction<number>) => {
         state.status = 'succeeded';
-        state.data = state.data.filter(intake => intake.intakeId !== action.payload);
+        state.data = state.data.filter(course => course.id !== action.payload);
       })
       .addCase(deleteCourse.rejected, (state, action) => {
         state.status = 'failed';

@@ -50,7 +50,7 @@ namespace StudendtMSAReact.Controllers
             await _IntakesRepo.AddIntakeAsync(Intake);
             return CreatedAtAction("GetIntake", new { id = Intake.IntakeId }, Intake);
         }
-
+        
         // PUT: api/Intakes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

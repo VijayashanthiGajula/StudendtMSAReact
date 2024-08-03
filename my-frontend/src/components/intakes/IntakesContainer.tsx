@@ -10,7 +10,6 @@ import CustomDialog from '../CustomDialog';
 const IntakesContainer: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { data: intakes, status, error } = useSelector((state: RootState) => state.intakes);
-
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [formData, setFormData] = useState({ intakeId: '', name: '' });
@@ -20,6 +19,7 @@ const IntakesContainer: React.FC = () => {
       dispatch(getIntakes());
     }
   }, [status, dispatch]);
+  const resetForm = () => setFormData({ intakeId: '', name: '' });//resetting the form
 
   const handleAddClick = () => setOpen(true);
   const handleEditClick = (params: GridRenderCellParams) => {
@@ -27,19 +27,27 @@ const IntakesContainer: React.FC = () => {
     setEditOpen(true);
   };
   const handleDeleteClick = (intakeId: number) => dispatch(deleteIntake(intakeId));
+
   const handleSave = () => {
     if (formData.intakeId) {
       const intakeIdNumber = parseInt(formData.intakeId, 10);
-      dispatch(editIntake({ intakeId: intakeIdNumber, name: formData.name })).then(() => {
+      dispatch(editIntake({
+         intakeId: intakeIdNumber, 
+         name: formData.name 
+        }))
+        .then(() => {
         dispatch(getIntakes());
-        setFormData({ intakeId: '', name: '' });
+        resetForm();
       });
-    } else {
-      dispatch(createIntake({ intakeId: 0, name: formData.name }));
+    }
+    else {
+      
+      //const newIntakeId = intakes.length > 0 ? Math.max(...intakes.map(i => i.intakeId)) + 1 : 1;
+      dispatch(createIntake({ intakeId:0, name: formData.name }));
     }
     setOpen(false);
     setEditOpen(false);
-    setFormData({ intakeId: '', name: '' });
+    resetForm();
   };
 
   const columns: GridColDef[] = [
@@ -68,12 +76,12 @@ const IntakesContainer: React.FC = () => {
     id: intake.intakeId.toString()
   }));
   const fields = [
-    { label: 'Name', name: 'name', type : 'text'}
+    { label: 'Name', name: 'name', type: 'text' }
   ];
 
   return (
     <div>
-      <CustomGrid 
+      <CustomGrid
         columns={columns}
         rows={rows}
         onAddClick={handleAddClick}
@@ -100,9 +108,9 @@ const IntakesContainer: React.FC = () => {
           <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog> */}
-        <CustomDialog
+      <CustomDialog
         open={open || editOpen}
-        onClose={() => { setOpen(false); setEditOpen(false); }}
+        onClose={() => { setOpen(false); setEditOpen(false); resetForm(); }}
         title={formData.intakeId ? 'Edit Intake' : 'Add Intake'}
         formData={formData}
         onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}

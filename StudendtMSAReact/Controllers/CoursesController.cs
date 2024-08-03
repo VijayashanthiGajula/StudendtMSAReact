@@ -59,10 +59,10 @@ namespace StudendtMSAReact.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse(int id, Course course)
         {
-            if (id != course.Id)
-            {
-                return BadRequest();
-            }       
+            //if (id != course.Id)
+            //{
+            //    return BadRequest();
+            //}       
 
             try
             {

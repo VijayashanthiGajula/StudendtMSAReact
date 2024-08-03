@@ -18,12 +18,8 @@ namespace StudendtMSAReact.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure the one-to-many relationship
-            modelBuilder.Entity<Intake>()
-                .HasMany(i => i.Courses)
-                .WithOne(c => c.Intake)
-                .HasForeignKey(c => c.IntakeId);
-            modelBuilder.Seed();
+            base.OnModelCreating(modelBuilder);
+            DataToSeed.Seed(modelBuilder);
         }
     }
 }

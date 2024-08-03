@@ -26,8 +26,10 @@ const CourseContainer: React.FC = () => {
       dispatch(getIntakes());
     }
   }, [coursesStatus, intakesStatus, dispatch]);
+  const resetForm = () => setFormData({ id: '', name: '', capacity: '', fees: '', intakeId: '' });//resetting the form
 
-  const handleAddClick = () => setOpen(true);
+
+  const handleAddClick = () => (setOpen(true),  resetForm(),setSelectedIntake(null));
   const handleEditClick = (params: GridRenderCellParams) => {
     const intake = intakes.find(intake => intake.intakeId === params.row.intakeId);
     setSelectedIntake(intake || null);
@@ -41,26 +43,43 @@ const CourseContainer: React.FC = () => {
     setEditOpen(true);
   };
   const handleDeleteClick = (id: number) => dispatch(deleteCourse(id));
-  const handleSave = () => {
+  const handleSave = () => { 
     const intakeIdNumber = selectedIntake ? selectedIntake.intakeId : 0;
-    if (formData.id) {
-      const idNumber = parseInt(formData.id, 10);
-      const capacityNumber = parseInt(formData.capacity, 10);
-      const feesNumber = parseFloat(formData.fees);
-      dispatch(editCourse({ id: idNumber, name: formData.name, capacity: capacityNumber, fees: feesNumber, intakeId: intakeIdNumber })).then(() => {
+    const idNumber = formData.id ? parseInt(formData.id, 10) : 0;
+    const capacityNumber = parseInt(formData.capacity, 10);
+    const feesNumber = parseFloat(formData.fees);
+    
+    if (formData.id) {      
+      dispatch(editCourse({
+        id: idNumber,
+        name: formData.name,
+        capacity: capacityNumber,
+        fees: feesNumber,
+        intakeId: intakeIdNumber
+      }))
+      .then(() => {
         dispatch(getCourses());
-        setFormData({ id: '', name: '', capacity: '', fees: '', intakeId: '' });
-        setSelectedIntake(null);
+        resetForm();
+       
       });
     } else {
-      const capacityNumber = parseInt(formData.capacity, 10);
-      const feesNumber = parseFloat(formData.fees);
-      dispatch(createCourse({ id: 0, name: formData.name, capacity: capacityNumber, fees: feesNumber, intakeId: intakeIdNumber }));
+
+      dispatch(createCourse({ 
+        id: idNumber,
+        name: formData.name, 
+        capacity: capacityNumber,
+         fees: feesNumber,
+          intakeId: intakeIdNumber 
+        })).then (()=> {
+          dispatch(getCourses());
+            resetForm();
+           
+        });
     }
+    
     setOpen(false);
     setEditOpen(false);
-    setFormData({ id: '', name: '', capacity: '', fees: '', intakeId: '' });
-    setSelectedIntake(null);
+    resetForm();
   };
 
   const columns: GridColDef[] = [
@@ -68,7 +87,7 @@ const CourseContainer: React.FC = () => {
     { field: 'name', headerName: 'Name', headerAlign: 'center', flex: 2, align: 'center', minWidth: 100 },
     { field: 'capacity', headerName: 'Capacity', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100 },
     { field: 'fees', headerName: 'Fees', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100 },
-    { field: 'intakeId', headerName: 'Intake ID', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100 },
+    { field: 'intakeId', headerName: 'Intake', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100 },
     {
       field: 'edit', headerName: 'Edit', headerAlign: 'center', flex: 1, align: 'center', minWidth: 100,
       renderCell: (params: GridRenderCellParams) => (
@@ -93,12 +112,12 @@ const CourseContainer: React.FC = () => {
   }));
 
   const fields = [
-    { label: 'Name', name: 'name',type: 'text'},
-    { label: 'Capacity', name: 'capacity',type: 'text' },
-    { label: 'Fees', name: 'fees',type: 'text' },
+    { label: 'Name', name: 'name', type: 'text' },
+    { label: 'Capacity', name: 'capacity', type: 'text' },
+    { label: 'Fees', name: 'fees', type: 'text' },
     {
       label: 'Intake',
-      name: 'intakeId',type: 'autoComplete',
+      name: 'intakeId', type: 'autoComplete',
       component: (
         <Autocomplete
           options={intakes}
@@ -113,7 +132,7 @@ const CourseContainer: React.FC = () => {
 
   return (
     <div>
-      <CustomGrid 
+      <CustomGrid
         columns={columns}
         rows={rows}
         onAddClick={handleAddClick}

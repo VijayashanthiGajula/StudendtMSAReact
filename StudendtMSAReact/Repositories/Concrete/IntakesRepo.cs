@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Humanizer;
+using Microsoft.EntityFrameworkCore;
 using StudendtMSAReact.Context;
 using StudendtMSAReact.Models;
 using StudendtMSAReact.Repositories.Abstract;
+using System.Linq;
 
 namespace StudendtMSAReact.Repositories.Concrete
 {
