@@ -68,7 +68,7 @@ const IntakesContainer: React.FC = () => {
     id: intake.intakeId.toString()
   }));
   const fields = [
-    { label: 'Name', name: 'name' }
+    { label: 'Name', name: 'name', type : 'text'}
   ];
 
   return (
