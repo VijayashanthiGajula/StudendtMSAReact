@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, useMediaQuery, useTheme } from '@mui/material';
+import { Button, CircularProgress, Container, useMediaQuery, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 interface CustomGridProps {
@@ -44,7 +44,7 @@ const CustomGrid: React.FC<CustomGridProps> = ({
             fontWeight: 'bold', // Ensure the text in header is bold
           }, }}
       />
-      {status === 'loading' && <p>Loading...</p>}
+      {status === 'loading' && <p><CircularProgress /></p>}
       {status === 'failed' && <p>Error: {error}</p>}
       </Container>
   );

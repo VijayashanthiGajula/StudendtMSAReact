@@ -42,7 +42,8 @@ const CourseContainer: React.FC = () => {
     });
     setEditOpen(true);
   };
-  const handleDeleteClick = (id: number) => dispatch(deleteCourse(id));
+  const handleDeleteClick =   (id: number) => dispatch(deleteCourse(id))
+  .then(() =>    dispatch(getCourses()));
   const handleSave = () => { 
     const intakeIdNumber = selectedIntake ? selectedIntake.intakeId : 0;
     const idNumber = formData.id ? parseInt(formData.id, 10) : 0;
@@ -140,7 +141,7 @@ const CourseContainer: React.FC = () => {
         onDeleteClick={handleDeleteClick}
         status={coursesStatus}
         error={coursesError}
-        listName='courses'
+        listName='Course'
       />
       <CustomDialog
         open={open || editOpen}

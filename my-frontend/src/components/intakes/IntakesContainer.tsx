@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
 import { getIntakes, createIntake, editIntake, deleteIntake } from '../../Redux/intakeActions';
 import CustomGrid from '../CustomGrid';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
+import {   Alert, Button, CircularProgress, Snackbar } from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import CustomDialog from '../CustomDialog';
+
 
 const IntakesContainer: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -13,6 +14,9 @@ const IntakesContainer: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [formData, setFormData] = useState({ intakeId: '', name: '' });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     if (status === 'idle') {
@@ -38,16 +42,29 @@ const IntakesContainer: React.FC = () => {
         .then(() => {
         dispatch(getIntakes());
         resetForm();
+        setSnackbarMessage('Intake updated successfully');
+          setSnackbarSeverity('success');
+          setSnackbarOpen(true);
       });
     }
     else {
       
       //const newIntakeId = intakes.length > 0 ? Math.max(...intakes.map(i => i.intakeId)) + 1 : 1;
       dispatch(createIntake({ intakeId:0, name: formData.name }));
+      setSnackbarMessage('Intake added successfully');
+          setSnackbarSeverity('success');
+          setSnackbarOpen(true);
     }
     setOpen(false);
     setEditOpen(false);
     resetForm();
+    
+  };
+  const handleSnackbarClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   const columns: GridColDef[] = [
@@ -79,8 +96,9 @@ const IntakesContainer: React.FC = () => {
     { label: 'Name', name: 'name', type: 'text' }
   ];
 
+  
   return (
-    <div>
+    <div>  
       <CustomGrid
         columns={columns}
         rows={rows}
@@ -89,25 +107,9 @@ const IntakesContainer: React.FC = () => {
         onDeleteClick={handleDeleteClick}
         status={status}
         error={error}
-        listName='shanthi'
+        listName='Intake'
       />
-      {/* <Dialog open={open || editOpen} onClose={() => { setOpen(false); setEditOpen(false); }}>
-        <DialogTitle>{formData.intakeId ? 'Edit Intake' : 'Add Intake'}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Name"
-            fullWidth
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => { setOpen(false); setEditOpen(false); }}>Cancel</Button>
-          <Button onClick={handleSave}>Save</Button>
-        </DialogActions>
-      </Dialog> */}
+     
       <CustomDialog
         open={open || editOpen}
         onClose={() => { setOpen(false); setEditOpen(false); resetForm(); }}
@@ -116,9 +118,30 @@ const IntakesContainer: React.FC = () => {
         onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
         onSave={handleSave}
         fields={fields}
-      />
+      /> 
+       <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+          >
+            <Alert  onClose={handleSnackbarClose} severity={snackbarSeverity}>
+              {snackbarMessage}
+            </Alert>
+          </Snackbar>
     </div>
   );
 };
 
 export default IntakesContainer;
+function setSnackbarSeverity(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
+function setSnackbarMessage(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
+function setSnackbarOpen(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
