@@ -6,9 +6,9 @@ import ThemeComponent from './components/theme/ThemeComponent';
 
 const App: React.FC = () => {
   return (
-    <ThemeProviderWrapper >  
-      <ThemeComponent />      
-      <Navbar />  
+    <ThemeProviderWrapper >             
+      <Navbar />   
+      <ThemeComponent />
       <AppRoutes/>
       </ThemeProviderWrapper > 
 

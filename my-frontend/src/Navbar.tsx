@@ -7,6 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { AccountCircle } from '@mui/icons-material';
+import ThemeComponent from './components/theme/ThemeComponent';
 
 const Navbar: React.FC = () => {
 
@@ -35,7 +36,7 @@ const Navbar: React.FC = () => {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List>      
     </Box>
   );
   /** objects for mode  */
@@ -51,7 +52,6 @@ const Navbar: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-
       <CssBaseline />
       <AppBar position='static' sx={{ bgcolor: 'primary.main' }}>
         <Toolbar>
@@ -125,7 +125,7 @@ const Navbar: React.FC = () => {
           {drawer}
         </Drawer>
       </nav>
-
+      {/* <ThemeComponent /> */}
     </Box>
   );
 };

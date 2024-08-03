@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, CircularProgress, Container, useMediaQuery, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import CustomBackButton from './CustomBackButton';
 
 interface CustomGridProps {
   columns: GridColDef[];
@@ -44,6 +45,7 @@ const CustomGrid: React.FC<CustomGridProps> = ({
             fontWeight: 'bold', // Ensure the text in header is bold
           }, }}
       />
+      <CustomBackButton/> 
       {status === 'loading' && <p><CircularProgress /></p>}
       {status === 'failed' && <p>Error: {error}</p>}
       </Container>
