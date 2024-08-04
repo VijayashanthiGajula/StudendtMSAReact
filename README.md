@@ -25,9 +25,18 @@
   Used Redux and react hooks for state management while performing CRUD operations
   Switching to Different themes is available
   Unit Testing , Integration testing ( tried to apply unit and integration testing for main App component. Still in progress for othe components. Due to force installation of jest currently test stopped running properly but app and index test files were running and succeeded before.)
-  Aiming for 
+  ## Aiming for 
   Containerizing the app.
   Deploying on Azure  
+  # Steps Required to use this app:
+  Clone the project
+  Change the connection string in appsettings.json file- according to your SQL server and login details.
+  Add-migrations DataToSeed
+  Update-Database
+  # Installations Required:
+   npm install
+   npm start
+   Run the API as well
 
   # Future Improvements of the project
      A student can Register, Login and enroll into a course.
@@ -63,3 +72,17 @@
 
   # Data modelling:
   ![image](https://github.com/VijayashanthiGajula/StudendtMSAReact/assets/47542612/d4a7e418-c9fc-4804-8d68-739141a812fa)
+
+  ![image](https://github.com/user-attachments/assets/1d20f823-2baf-40a3-8a66-29bfe22e3243)
+  ![image](https://github.com/user-attachments/assets/dd87f723-0af6-4465-9514-d9439f4a99a3)
+  ![image](https://github.com/user-attachments/assets/25589342-eb65-485b-97d5-abf0258897b6)
+
+![image](https://github.com/user-attachments/assets/5cea39a9-add1-44b2-8420-01b17f553487)
+![image](https://github.com/user-attachments/assets/a3b4ec80-e4c5-4d22-a2b9-cf0faccd3513)
+
+![image](https://github.com/user-attachments/assets/468c9caf-a0db-45ca-b2d9-db958d86e7f6)
+
+![image](https://github.com/user-attachments/assets/61969581-51f9-49a4-bcbe-1635bc14ccbb)
+
+
+
