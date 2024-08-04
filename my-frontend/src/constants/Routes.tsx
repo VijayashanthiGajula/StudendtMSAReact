@@ -5,7 +5,7 @@ import Intakes from '../components/intakes/Intakes';
 import Courses from '../components/courses/CourseContainer';
 import AddCourse from '../components/courses/AddCourse';
 import IntakesContainer from '../components/intakes/IntakesContainer';
-import Enrollment from '../components/Enrollment';//sprint 2
+import Enrollment from '../components/enrollment/Enrollment';//sprint 2
 
 import Sample from '../components/intakes/Sample';
 

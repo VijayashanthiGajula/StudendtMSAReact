@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
 import { getCourses, createCourse, editCourse, deleteCourse } from '../../Redux/courseActions';
 import { getIntakes } from '../../Redux/intakeActions';
-import CustomGrid from '../CustomGrid';
+import CustomGrid from '../customComponents/CustomGrid';
 import { Button, TextField, Autocomplete } from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import CustomDialog from '../CustomDialog';
+import CustomDialog from '../customComponents/CustomDialog';
 
 const CourseContainer: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

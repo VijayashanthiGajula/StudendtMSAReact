@@ -5,7 +5,7 @@ import download from '../assets/download.png';
 import python from '../assets/python.jpg';
 import react from '../assets/react.png';
 import webdesigns from '../assets/webdesigns.jpg';
-import Enrollment from '../components/Enrollment';
+import Enrollment from './enrollment/Enrollment';
 
 const Home = () => {
   const redirect = useNavigate();
