@@ -88,7 +88,7 @@ const IntakesContainer: React.FC = () => {
     },
   ];
 
-  const rows = intakes.map(intake => ({
+  const rows = intakes.map((intake: { intakeId: { toString: () => any; }; }) => ({
     ...intake,
     id: intake.intakeId.toString()
   }));

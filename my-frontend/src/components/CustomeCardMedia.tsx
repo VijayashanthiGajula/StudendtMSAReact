@@ -1,7 +1,7 @@
 import { CardMedia } from '@mui/material'
 import React from 'react'
 
-const CustomeCardMedia = (props: { img: string | undefined }) => {
+const CustomCardMedia = (props: { img: string | undefined }) => {
   return (
     <div>
     <CardMedia
@@ -14,4 +14,4 @@ const CustomeCardMedia = (props: { img: string | undefined }) => {
   )
 }
 
-export default CustomeCardMedia
+export default CustomCardMedia
