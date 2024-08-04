@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomBackButton from './CustomBackButton';
+import CustomBackButton from '../customComponents/CustomBackButton';
 import { Container } from '@mui/material';
 
 const Enrollment = () => {

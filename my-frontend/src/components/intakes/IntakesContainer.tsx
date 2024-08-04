@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
 import { getIntakes, createIntake, editIntake, deleteIntake } from '../../Redux/intakeActions';
-import CustomGrid from '../CustomGrid';
+import CustomGrid from '../customComponents/CustomGrid';
 import {   Alert, Button, CircularProgress, Snackbar } from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import CustomDialog from '../CustomDialog';
+import CustomDialog from '../customComponents/CustomDialog';
 
 
 const IntakesContainer: React.FC = () => {
