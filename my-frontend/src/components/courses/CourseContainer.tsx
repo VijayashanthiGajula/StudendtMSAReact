@@ -4,7 +4,7 @@ import { RootState, AppDispatch } from '../../Redux/store';
 import { getCourses, createCourse, editCourse, deleteCourse } from '../../Redux/courseActions';
 import { getIntakes } from '../../Redux/intakeActions';
 import CustomGrid from '../customComponents/CustomGrid';
-import { Button, TextField, Autocomplete } from '@mui/material';
+import { Button, TextField, Autocomplete, Container } from '@mui/material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import CustomDialog from '../customComponents/CustomDialog';
 
@@ -132,7 +132,15 @@ const CourseContainer: React.FC = () => {
   ];
 
   return (
-    <div>
+    <Container
+      maxWidth="xl"
+      sx={{
+        minWidth: 300,
+        width: '100%',
+        margin: '0 auto',
+        padding: { xs: 1, sm: 2, md: 4 }
+      }}
+    >
       <CustomGrid
         columns={columns}
         rows={rows}
@@ -152,7 +160,7 @@ const CourseContainer: React.FC = () => {
         onSave={handleSave}
         fields={fields}
       />
-    </div>
+    </Container>
   );
 };
 

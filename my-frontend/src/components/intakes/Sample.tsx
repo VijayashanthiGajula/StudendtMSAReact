@@ -134,7 +134,7 @@ const Sample = () => {
     }))
 
     return (
-        <Box sx={{   width: '90%', maxWidth: 'lg', margin: '0 auto' }}>
+        <Box sx={{   width: '100%', maxWidth: 'xl', margin: '0 auto' }}>
         <DataGrid
           columns={columns}
           rows={rows}
