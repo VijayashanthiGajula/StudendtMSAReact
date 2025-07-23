@@ -1,0 +1,35 @@
+name: Deploy Backend API to Azure App Service
+
+on:
+  push:
+    branches:
+      - main  # or master or your main branch
+
+jobs:
+  build-and-deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.x  # adjust if needed
+
+      - name: Restore dependencies
+        run: dotnet restore ./server
+
+      - name: Build project
+        run: dotnet build ./server --configuration Release --no-restore
+
+      - name: Publish project
+        run: dotnet publish ./server --configuration Release --no-build --output ./server/publish
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: MsaReactJsCollege
+          publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
+          package: ./server/publish
