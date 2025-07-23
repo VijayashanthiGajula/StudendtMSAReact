@@ -6,7 +6,7 @@ const ThemeComponent: React.FC = () => {
   const { darkMode, handleThemeChange } = useThemeContext();
   
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Box sx={{ my: 2 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
            
