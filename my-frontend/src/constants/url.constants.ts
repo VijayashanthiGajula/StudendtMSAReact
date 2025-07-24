@@ -8,4 +8,4 @@ const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 //export const baseUrl = `${API_BASE_URL}/Intakes`;
 export const baseUrl = "https://msareactbackend-gqagc0e0cchkdzen.eastus-01.azurewebsites.net/api/Intakes";
-export const CourseUrl = `${API_BASE_URL}/Courses`;
+export const CourseUrl =   `${API_BASE_URL}/Courses`;  
