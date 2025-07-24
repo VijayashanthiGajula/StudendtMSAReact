@@ -21,14 +21,14 @@ jobs:
           dotnet-version: 9.x
 
       - name: Restore dependencies
-        run: dotnet restore StudendtMSAReact/StudendtMSAReact/StudendtMSAReact.csproj
+        run: dotnet restore StudendtMSAReact/StudendtMSAReact.csproj
 
 
       - name: Build backend
-        run: dotnet build StudendtMSAReact/StudendtMSAReact/StudendtMSAReact.csproj --configuration Release --no-restore
+        run: dotnet build StudendtMSAReact/StudendtMSAReact.csproj --configuration Release --no-restore
 
       - name: Publish backend project
-        run: dotnet publish StudendtMSAReact/StudendtMSAReact/StudendtMSAReact.csproj --configuration Release --output ./publish
+        run: dotnet publish StudendtMSAReact/StudendtMSAReact.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
