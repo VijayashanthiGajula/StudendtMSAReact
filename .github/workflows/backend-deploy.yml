@@ -6,7 +6,7 @@ on:
       - master  # or your main branch
 
 env:
-  BACKEND_PATH: StudentMSAReact
+  BACKEND_PATH: StudentMSAReact/StudendtMSAReact
 
 jobs:
   build-and-deploy-backend:
@@ -24,18 +24,17 @@ jobs:
           dotnet-version: 9.x
 
       - name: Restore dependencies
-        run: dotnet restore ${{ env.BACKEND_PATH }}/StudendtMSAReact/StudendtMSAReact.csproj
- 
+        run: dotnet restore ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj
 
       - name: Build backend
-        run: dotnet build ${{ env.BACKEND_PATH }}/StudentMSAReact.csproj --configuration Release --no-restore
+        run: dotnet build ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj --configuration Release --no-restore
 
       - name: Publish backend project
-        run: dotnet publish ${{ env.BACKEND_PATH }}/StudentMSAReact.csproj --configuration Release --output ./publish
+        run: dotnet publish ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: MsaReactJsCollege  # Change if your Azure App Service name is different
+          app-name: MsaReactJsCollege  # Your Azure App Service name
           publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
           package: ./publish
