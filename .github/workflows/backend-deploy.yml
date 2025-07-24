@@ -6,7 +6,7 @@ on:
       - master  # or your main branch
 
 env:
-  BACKEND_PATH: StudentMSAReact/StudentMSAReact
+  BACKEND_PATH: StudentMSAReact
 
 jobs:
   build-and-deploy-backend:
@@ -24,7 +24,7 @@ jobs:
           dotnet-version: 9.x
 
       - name: Restore dependencies
-        run: dotnet restore ${{ env.BACKEND_PATH }}/StudentMSAReact.csproj
+        run: dotnet restore ${{ env.BACKEND_PATH }}/StudendtMSAReact/StudendtMSAReact.csproj
  
 
       - name: Build backend
