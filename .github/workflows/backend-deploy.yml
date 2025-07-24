@@ -6,7 +6,7 @@ on:
       - master  # or your main branch
 
 env:
-  BACKEND_PATH: StudentMSAReact
+  BACKEND_PATH: StudentMSAReact/StudentMSAReact
 
 jobs:
   build-and-deploy-backend:
