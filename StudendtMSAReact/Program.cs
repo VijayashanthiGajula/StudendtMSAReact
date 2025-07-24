@@ -6,18 +6,35 @@ using StudendtMSAReact.Repositories.Concrete;// reffering to context file
 
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 //Connecting t database
 var connectionString = builder.Configuration.GetConnectionString("MyConnectionString");
 builder.Services.AddDbContext<StudnetDBContext>(options =>
       options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'StudentContext' not found.")));
 // Add CORS policy
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins",
+//        builder => builder.AllowAnyOrigin()
+//                          .AllowAnyMethod()
+//                          .AllowAnyHeader());
+//});
+
+//Secure access from only API-- this allows traffic only from this specific origin
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://msareactjscollege-f4gsfchqgscuejfk.eastus-01.azurewebsites.net")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
 });
+
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -36,7 +53,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // Use CORS policy
-app.UseCors("AllowAllOrigins");
+//app.UseCors("AllowAllOrigins");
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 
