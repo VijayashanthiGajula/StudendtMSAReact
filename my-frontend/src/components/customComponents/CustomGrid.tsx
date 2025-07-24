@@ -141,7 +141,12 @@ const CustomGrid: React.FC<CustomGridProps> = ({
           <DataGrid
             columns={columns}
             rows={rows}
-           
+            sx={{
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 'bold',
+              },
+              fontSize: { xs: '0.75rem', sm: '0.875rem' },
+            }}
           />
         </Box>
       </Grid>

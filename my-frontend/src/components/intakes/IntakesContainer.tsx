@@ -67,19 +67,25 @@ const IntakesContainer: React.FC = () => {
       field: 'intakeId',
       headerName: 'ID',
       minWidth: 100,
-      flex: 1
+      flex: 1,
+      headerAlign: 'center',      
+      align: 'center'
     },
     {
       field: 'name',
       headerName: 'Name',
       minWidth: 150,
-      flex: 2
+      flex: 2,
+      headerAlign: 'center',
+      align: 'center'
     },
     {
       field: 'edit',
       headerName: 'Edit',
       minWidth: 100,
       flex: 1,
+      headerAlign: 'center',
+      align: 'center',
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -100,6 +106,8 @@ const IntakesContainer: React.FC = () => {
       headerName: 'Delete',
       minWidth: 100,
       flex: 1,
+      headerAlign: 'center',
+      align: 'center',
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -176,7 +184,7 @@ const IntakesContainer: React.FC = () => {
       maxWidth="xl"
       sx={{
         minWidth: 300,
-        width: '100%',
+        width: '90%',
         margin: '0 auto',
         padding: { xs: 1, sm: 2, md: 4 }
       }}

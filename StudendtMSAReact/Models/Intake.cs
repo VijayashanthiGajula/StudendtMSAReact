@@ -2,10 +2,7 @@
 
 namespace StudendtMSAReact.Models
 {
-    
- 
-
-        public class Intake
+    public class Intake
         {
             public int IntakeId { get; set; }
             public string Name { get; set; }
@@ -14,8 +11,4 @@ namespace StudendtMSAReact.Models
         [JsonIgnore]
         public virtual List<Course>? Courses { get; set; }
         }
-
-
-
-    
 }

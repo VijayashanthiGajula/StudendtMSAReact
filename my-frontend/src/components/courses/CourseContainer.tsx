@@ -136,7 +136,7 @@ const CourseContainer: React.FC = () => {
       maxWidth="xl"
       sx={{
         minWidth: 300,
-        width: '100%',
+        width: '90%',
         margin: '0 auto',
         padding: { xs: 1, sm: 2, md: 4 }
       }}
