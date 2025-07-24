@@ -27,8 +27,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("https://msareactjscollege-f4gsfchqgscuejfk.eastus-01.azurewebsites.net")
-                  .AllowAnyHeader()
+            policy.WithOrigins(
+                    "https://black-cliff-00c5d950f.1.azurestaticapps.net",
+                   "http://localhost:3000"
+                )
+            .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
@@ -54,7 +57,7 @@ if (app.Environment.IsDevelopment())
 }
 // Use CORS policy
 //app.UseCors("AllowAllOrigins");
-app.UseCors("AllowSpecificOrigin");
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 
