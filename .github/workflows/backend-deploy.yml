@@ -24,13 +24,14 @@ jobs:
           dotnet-version: 9.x
 
       - name: Restore dependencies
-        run: dotnet restore ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj
+        run: dotnet restore ${{ env.BACKEND_PATH }}/StudentMSAReact/StudentMSAReact.csproj
+ 
 
       - name: Build backend
-        run: dotnet build ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj --configuration Release --no-restore
+        run: dotnet build ${{ env.BACKEND_PATH }}/StudentMSAReact/StudentMSAReact.csproj --configuration Release --no-restore
 
       - name: Publish backend project
-        run: dotnet publish ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj --configuration Release --output ./publish
+        run: dotnet publish ${{ env.BACKEND_PATH }}/StudentMSAReact/StudentMSAReact.csproj --configuration Release --output ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
