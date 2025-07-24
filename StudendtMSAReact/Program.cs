@@ -7,6 +7,8 @@ using StudendtMSAReact.Repositories.Concrete;// reffering to context file
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var productionUrl = "https://black-cliff-00c5d950f.1.azurestaticapps.net";
+var developmentUrl = "http://localhost:3000";
 
 //Connecting t database
 var connectionString = builder.Configuration.GetConnectionString("MyConnectionString");
@@ -28,8 +30,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "https://black-cliff-00c5d950f.1.azurestaticapps.net",
-                   "http://localhost:3000"
+                    productionUrl,developmentUrl
                 )
             .AllowAnyHeader()
                   .AllowAnyMethod();
