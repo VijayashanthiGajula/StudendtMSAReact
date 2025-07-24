@@ -9,6 +9,7 @@ const newRecord='newCourse';
 // Async thunk for fetching intakes
 export const getCourses = createAsyncThunk('courses/getCourses', async () => {
   const response = await axios.get<ICourse[]>(url);
+  console.log("API Base URL:", url);
   console.log(response);
   return response.data;
    
