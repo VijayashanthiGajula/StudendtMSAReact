@@ -1,35 +1,40 @@
-name: Deploy Backend API to Azure App Service
+name: Build and deploy ASP.Net Core API to Azure Web App - MsaReactJsBackend
 
 on:
   push:
     branches:
-      - master   # or master or your main branch
+      - master  # or your main branch
+
+env:
+  BACKEND_PATH: StudentMSAReact
 
 jobs:
   build-and-deploy-backend:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    permissions:
+      contents: read  # Required for actions/checkout
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.x  # adjust if needed
+          dotnet-version: 9.x
 
       - name: Restore dependencies
-        run: dotnet restore ./StudendtMSAReact
+        run: dotnet restore ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj
 
-      - name: Build project
-        run: dotnet build ./StudendtMSAReact --configuration Release --no-restore
+      - name: Build backend
+        run: dotnet build ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj --configuration Release --no-restore
 
-      - name: Publish project
-        run: dotnet publish ./StudendtMSAReact --configuration Release --no-build --output ./StudendtMSAReact/publish
+      - name: Publish backend project
+        run: dotnet publish ${{ env.BACKEND_PATH }}/StudendtMSAReact.csproj --configuration Release --output ./publish
 
-      - name: Deploy to Azure App Service
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: MsaReactJsCollege
+          app-name: MsaReactJsCollege  # Change if your Azure App Service name is different
           publish-profile: ${{ secrets.AZURE_BACKEND_PUBLISH_PROFILE }}
-          package: ./StudendtMSAReact/publish
+          package: ./publish
