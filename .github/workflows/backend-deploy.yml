@@ -3,7 +3,7 @@ name: Deploy Backend API to Azure App Service
 on:
   push:
     branches:
-      - main  # or master or your main branch
+      - master   # or master or your main branch
 
 jobs:
   build-and-deploy-backend:
